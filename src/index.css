@@ -1,4 +1,55 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Yeseva+One&display=swap')
+
+@import url('https://fonts.googleapis.com/css2?family=Yeseva+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+Antique&display=swap');
+
+* {
+    transition-property: color, opacity;
+    transition-duration: 300ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #BFD2F8;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #2b3b94;
+    border-radius: 12px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #3244aa;
+    border-radius: 12px;
+}
+
+.slick-dots {
+    display: flex !important;
+    margin-bottom: -50px;
+}
+
+.slick-dots li {
+    list-style: none;
+    margin: 0 12px;
+}
+
+.slick-dots li button:before {
+    content: "";
+    position: absolute;
+    left: -10px;
+    width: 40px;
+    height: 3px;
+    background-color: white;
+}
+
+.slick-dots li.slick-active button:before {
+    height: 4px;
+    opacity: 1;
+}
