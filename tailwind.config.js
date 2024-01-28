@@ -11,7 +11,9 @@ module.exports = {
         textSecondary: "#212124",
       },
       fontFamily: {
-        header: ["Yeseva One", "serif"],
+        yeseva: ["Yeseva One", "serif"],
+        work: ["Work Sans", "sans-serif"],
+        zen: ["Zen Kaku Gothic Antique", "sans-serif"],
       },
     },
   },
