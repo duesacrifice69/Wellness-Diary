@@ -84,3 +84,11 @@ export function isTokenExpired() {
     return false;
   }
 }
+
+export function chunkArray(array, chunkSize) {
+  const chunkedArray = [];
+  for (let i = 0; i < array.length; i += chunkSize) {
+    chunkedArray.push(array.slice(i, i + chunkSize));
+  }
+  return chunkedArray;
+}

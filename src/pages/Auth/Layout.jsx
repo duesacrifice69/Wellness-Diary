@@ -7,6 +7,7 @@ const sliderSettings = {
   dots: true,
   autoplay: true,
   arrows: false,
+  dotsClass: "slick-bars",
   speed: 1000,
 };
 

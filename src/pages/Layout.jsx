@@ -1,21 +1,23 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
-import { Banner, Footer, Navbar } from "../components";
+import { Banner, Footer, Loader, Navbar } from "../components";
 
 export default function Layout({ auth }) {
   const [active, setActive] = useState();
+  const [loading, setLoading] = useState(true);
 
   return (
     <div>
+      <Loader loading={loading} />
       <div className="w-screen fixed top-0 z-[1]">
         <Banner />
         <Navbar active={active} />
       </div>
       {auth ? (
-        <Outlet context={[setActive]} />
+        <Outlet context={[setActive, setLoading]} />
       ) : (
         <div className="max-w-screen-lg mx-auto mt-[160px]">
-          <Outlet context={[setActive]} />
+          <Outlet context={[setActive, setLoading]} />
         </div>
       )}
       <Footer />

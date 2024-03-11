@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { loginUser, logoutUser, registerUser } from "../api";
 import { Loader } from "../components";
 import { LocalStorage, getUserDataFromToken, requestHandler } from "../utils";
-import { GoogleOAuthProvider } from "@react-oauth/google";
+import { GoogleOAuthProvider, useGoogleLogin } from "@react-oauth/google";
 
 const AuthContext = createContext({
   user: null,
@@ -19,6 +19,9 @@ const AuthProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
+  const handleGoogleLogin = useGoogleLogin({
+    onSuccess: (codeResponse) => console.log(codeResponse),
+  });
 
   const navigate = useNavigate();
 
@@ -32,7 +35,8 @@ const AuthProvider = ({ children }) => {
 
     switch (authType) {
       case "google":
-        loginSuccess(data);
+        handleGoogleLogin(data);
+        // loginSuccess(data);
         break;
 
       default:

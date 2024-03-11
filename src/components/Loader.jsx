@@ -1,6 +1,37 @@
-export default function Loader() {
+import { useEffect, useState } from "react";
+
+export default function Loader({ loading }) {
+  const [opacity, setOpacity] = useState(99);
+
+  useEffect(() => {
+    if (!loading) {
+      const interval = setInterval(() => {
+        setOpacity((o) => {
+          if (o > 0) {
+            return o - 1;
+          } else {
+            setOpacity(100);
+            clearTimeout(interval);
+            return 0;
+          }
+        });
+      }, 5);
+      return () => clearInterval(interval);
+    }
+  }, [loading]);
+
   return (
-    <div className="flex space-x-2 w-full h-screen fixed inset-0 bg-zinc-700/50 z-50 justify-center items-center">
+    <div
+      style={
+        loading
+          ? {}
+          : {
+              display: opacity === 0 || opacity === 100 ? "none" : "",
+              opacity: opacity / 100,
+            }
+      }
+      className="flex space-x-2 w-full h-screen fixed inset-0 bg-primary z-50 justify-center items-center"
+    >
       <div aria-label="Loading..." role="status">
         <svg className="h-12 w-12 animate-spin" viewBox="3 3 18 18">
           <path
