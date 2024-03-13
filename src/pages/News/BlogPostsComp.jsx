@@ -1,12 +1,10 @@
 import { useState } from "react";
-import { sampleData } from "../../common";
 import ReactPaginate from "react-paginate";
 import BlogPost from "./BlogPostComp";
 import { ArrowLeft, ArrowRight } from "../../icons";
 
-export default function BlogPosts() {
+export default function BlogPosts({ items, handleReadMore }) {
   const [itemOffset, setItemOffset] = useState(0);
-  const items = sampleData;
   const itemsPerPage = 4;
   const endOffset = itemOffset + itemsPerPage;
   const currentItems = items.slice(itemOffset, endOffset);
@@ -21,7 +19,9 @@ export default function BlogPosts() {
     <div>
       <div>
         {currentItems &&
-          currentItems.map((post, i) => <BlogPost post={post} key={i} />)}
+          currentItems.map((post, i) => (
+            <BlogPost post={post} key={i} onClick={() => handleReadMore(i)} />
+          ))}
       </div>
       <ReactPaginate
         className="flex justify-center p-4 m-4 font-work text-secondary"

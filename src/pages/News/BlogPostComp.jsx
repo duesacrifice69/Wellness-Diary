@@ -3,6 +3,7 @@ import { ArrowRight, Author, Date, Eye, Heart } from "../../icons";
 
 export default function BlogPost({
   post: { image, title, date, author, views, likes, description },
+  onClick,
 }) {
   return (
     <div className="font-work">
@@ -29,7 +30,7 @@ export default function BlogPost({
           ? description.slice(0, 264) + "..."
           : description}
       </div>
-      <Button className="mt-8 mb-16">
+      <Button className="mt-8 mb-16" onClick={onClick}>
         Read More &nbsp; <ArrowRight />
       </Button>
     </div>

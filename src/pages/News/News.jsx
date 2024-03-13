@@ -1,7 +1,15 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useOutletContext } from "react-router-dom";
-import { BottomLine, Heading } from "../../components";
-import { Search } from "../../icons";
+import { BottomLine, Button, Heading } from "../../components";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Author,
+  Date,
+  Eye,
+  Heart,
+  Search,
+} from "../../icons";
 import useGetImageHeight from "../../hooks/useGetImageHeight";
 import { sampleData } from "../../common";
 import RecentPost from "./RecentPostComp";
@@ -9,6 +17,9 @@ import BlogPosts from "./BlogPostsComp";
 
 export default function News() {
   const [setActive, setLoading] = useOutletContext();
+  const [activePost, setActivePost] = useState();
+  const [filteredPosts, setFilteredPosts] = useState(sampleData);
+  const [selectedCategory, setSelectedCategory] = useState();
   const imgRef = useRef();
   const imgH = useGetImageHeight(imgRef);
 
@@ -16,6 +27,33 @@ export default function News() {
     setActive(4);
     setLoading(false);
   }, [setLoading, setActive]);
+
+  const handleReadMore = (i) => {
+    setActivePost({ index: i, ...filteredPosts[i] });
+  };
+  const handlePrevious = () => {
+    const i = activePost.index - 1;
+    setActivePost({ index: i, ...filteredPosts[i] });
+  };
+  const handleNext = () => {
+    const i = activePost.index + 1;
+    setActivePost({ index: i, ...filteredPosts[i] });
+  };
+  const handleBack = () => {
+    setActivePost(null);
+    setSelectedCategory(null);
+    setFilteredPosts(sampleData);
+  };
+  const hanldeCategory = (category) => {
+    if (selectedCategory === category) {
+      setSelectedCategory(null);
+      setFilteredPosts(sampleData);
+    } else {
+      setSelectedCategory(category);
+      setFilteredPosts(sampleData.filter((post) => post.category === category));
+    }
+    setActivePost({ index: 0, ...filteredPosts[0] });
+  };
 
   return (
     <div>
@@ -34,12 +72,61 @@ export default function News() {
         }}
         className="text-primary font-work text-lg flex flex-col justify-center mb-5"
       >
-        <div className="">Home / News</div>
-        <div className="text-5xl font-yeseva">Blog Posts</div>
-        <div className="h-7" />
+        <div>
+          <span className="hover:underline cursor-pointer" onClick={handleBack}>
+            Home / News
+          </span>
+          {selectedCategory && " / " + selectedCategory}
+        </div>
+        <div className="text-5xl font-yeseva">
+          {activePost ? activePost.title : "Blog Posts"}
+        </div>
+        {activePost ? (
+          <div className="flex gap-5 text-black text-base">
+            <div className="flex items-center gap-2">
+              <Date />
+              {activePost.date}
+            </div>
+            <div className="flex items-center gap-2">
+              <Author />
+              {activePost.author}
+            </div>
+            <div className="flex items-center gap-2">
+              <Eye />
+              {activePost.views}
+            </div>
+            <div className="flex items-center gap-2">
+              <Heart />
+              {activePost.likes}
+            </div>
+          </div>
+        ) : (
+          <div className="h-7" />
+        )}
       </div>
       <div className="flex gap-6 mt-16">
-        <BlogPosts />
+        {activePost ? (
+          <div>
+            <img src={activePost.image} alt="active news" className="w-full" />
+            <div className="my-10">{activePost.description}</div>
+            <div className="flex justify-between mb-10">
+              <Button
+                onClick={handlePrevious}
+                disabled={activePost.index === 0}
+              >
+                <ArrowLeft /> &nbsp; Previous Article
+              </Button>
+              <Button
+                onClick={handleNext}
+                disabled={activePost.index === filteredPosts.length - 1}
+              >
+                Next Article &nbsp; <ArrowRight />
+              </Button>
+            </div>
+          </div>
+        ) : (
+          <BlogPosts items={filteredPosts} handleReadMore={handleReadMore} />
+        )}
         <div>
           <div className="bg-primary w-[315px] flex h-[50px] p-4 rounded-md">
             <input
@@ -56,10 +143,19 @@ export default function News() {
           </div>
           <div className="border-2 rounded-md px-4 my-8">
             <Heading>Categories</Heading>
-            <ul className="font-work mx-4 my-6">
+            <ul className="font-work mx-2 my-6">
               {["Surgery", "Health Care", "Medical", "Professional"].map(
                 (category, i) => (
-                  <li key={i} className="flex justify-between my-4">
+                  <li
+                    key={i}
+                    style={
+                      selectedCategory === category
+                        ? {}
+                        : { border: "1px solid white" }
+                    }
+                    className="flex justify-between p-2 my-1 rounded-md border cursor-pointer hover:bg-slate-50"
+                    onClick={() => hanldeCategory(category)}
+                  >
                     {category}
                     <div className="rounded-full w-max px-2 text-center text-textPrimary bg-secondary">
                       {
