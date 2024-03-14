@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useOutletContext } from "react-router-dom";
+import { useLocation, useOutletContext } from "react-router-dom";
 import { BottomLine, Button, Heading } from "../../components";
 import {
   ArrowLeft,
@@ -22,11 +22,19 @@ export default function News() {
   const [selectedCategory, setSelectedCategory] = useState();
   const imgRef = useRef();
   const imgH = useGetImageHeight(imgRef);
+  const location = useLocation();
 
   useEffect(() => {
     setActive(4);
     setLoading(false);
   }, [setLoading, setActive]);
+
+  useEffect(() => {
+    const post = location?.state?.post;
+    if (post) {
+      setActivePost({ index: 0, ...post });
+    }
+  }, [location?.state?.post]);
 
   const handleReadMore = (i) => {
     setActivePost({ index: i, ...filteredPosts[i] });

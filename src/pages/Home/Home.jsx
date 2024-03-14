@@ -54,6 +54,9 @@ export default function Home() {
       [e.target.name]: e.target.value,
     });
   };
+  const handleBloodPresureCheck = (e) => {
+    e.preventDefault();
+  };
 
   return (
     <div>
@@ -189,11 +192,13 @@ export default function Home() {
               onChange={handleChange}
             />
             <button
+              disabled={bloodPressureCheckDisabled}
               style={{
                 backgroundColor: bloodPressureCheckDisabled
                   ? "#EFB4C5"
                   : "#eb6088",
               }}
+              onClick={handleBloodPresureCheck}
               className="w-full font-sans p-2 rounded-xl text-white"
             >
               CHECK
@@ -215,11 +220,11 @@ export default function Home() {
         </div>
         <Heading className="text-center">News</Heading>
         <Slider {...sliderSettings}>
-          {chunkArray(sampleData, 4).map((array, i) => (
-            <div key={i}>
+          {chunkArray(sampleData, 4).map((array, index) => (
+            <div key={index}>
               <div className="grid grid-cols-2 gap-5 mt-10 p-4">
                 {array.map((news, i) => (
-                  <NewsCard data={news} key={i} />
+                  <NewsCard data={news} index={index * 4 + i} key={i} />
                 ))}
               </div>
             </div>
