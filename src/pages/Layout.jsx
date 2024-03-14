@@ -1,10 +1,16 @@
-import { useState } from "react";
-import { Outlet } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
 import { Banner, Footer, Loader, Navbar } from "../components";
 
 export default function Layout({ auth }) {
   const [active, setActive] = useState();
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log(loading);
+    if (!loading) setLoading(true);
+  }, [navigate, loading]);
 
   return (
     <div>

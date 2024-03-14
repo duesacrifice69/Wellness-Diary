@@ -24,13 +24,14 @@ export default function Loader({ loading }) {
     <div
       style={
         loading
-          ? {}
+          ? { height: "calc(100vh - 160px)" }
           : {
+              height: "calc(100vh - 160px)",
               display: opacity === 0 || opacity === 100 ? "none" : "",
               opacity: opacity / 100,
             }
       }
-      className="flex space-x-2 w-full h-screen fixed inset-0 bg-primary z-50 justify-center items-center"
+      className="flex space-x-2 w-full mt-auto fixed inset-0 bg-primary z-50 justify-center items-center"
     >
       <div aria-label="Loading..." role="status">
         <svg className="h-12 w-12 animate-spin" viewBox="3 3 18 18">
