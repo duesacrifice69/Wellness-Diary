@@ -9,6 +9,7 @@ import Contact from "./pages/Contact/Contact";
 import Login from "./pages/Auth/Login/Login";
 import Register from "./pages/Auth/Register/Register";
 import AuthLayout from "./pages/Auth/Layout";
+import AddNews from "./pages/AddNews/AddNews";
 import { useAuth } from "./context/AuthContext";
 
 export default function App() {
@@ -24,6 +25,7 @@ export default function App() {
         <Route path="/Doctors" element={<Doctors />} />
         <Route path="/News" element={<News />} />
         <Route path="/Contact" element={<Contact />} />
+        <Route path="/Addnews" element={<AddNews />} />
       </Route>
       <Route element={user ? <Navigate to="/" replace /> : <Layout auth />}>
         <Route element={<AuthLayout />}>

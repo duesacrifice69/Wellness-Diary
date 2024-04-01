@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useLocation, useOutletContext } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { BottomLine, Button, Heading } from "../../components";
 import {
   ArrowLeft,
@@ -14,20 +14,16 @@ import useGetImageHeight from "../../hooks/useGetImageHeight";
 import { sampleData } from "../../common";
 import RecentPost from "./RecentPostComp";
 import BlogPosts from "./BlogPostsComp";
+import usePageLoaded from "../../hooks/usePageLoaded";
 
 export default function News() {
-  const [setActive, setLoading] = useOutletContext();
   const [activePost, setActivePost] = useState();
   const [filteredPosts, setFilteredPosts] = useState(sampleData);
   const [selectedCategory, setSelectedCategory] = useState();
   const imgRef = useRef();
   const imgH = useGetImageHeight(imgRef);
   const location = useLocation();
-
-  useEffect(() => {
-    setActive(4);
-    setLoading(false);
-  }, [setLoading, setActive]);
+  usePageLoaded(4);
 
   useEffect(() => {
     const post = location?.state?.post;

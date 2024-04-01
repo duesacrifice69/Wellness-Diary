@@ -1,19 +1,15 @@
-import { useEffect, useRef } from "react";
-import { useOutletContext } from "react-router-dom";
+import { useRef } from "react";
 import useGetImageHeight from "../../hooks/useGetImageHeight";
 import { BottomLine } from "../../components";
 import { servicesSampleData } from "../../common";
 import Service from "./ServiceComp";
+import usePageLoaded from "../../hooks/usePageLoaded";
 
 export default function Services() {
-  const [setActive, setLoading] = useOutletContext();
   const imgRef = useRef();
   const imgH = useGetImageHeight(imgRef);
 
-  useEffect(() => {
-    setActive(2);
-    setLoading(false);
-  }, [setLoading, setActive]);
+  usePageLoaded(2);
 
   return (
     <div>

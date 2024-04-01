@@ -1,5 +1,4 @@
-import { useEffect, useRef, useState } from "react";
-import { useOutletContext } from "react-router-dom";
+import { useRef, useState } from "react";
 import {
   Blood,
   Calendar,
@@ -15,6 +14,7 @@ import Slider from "react-slick";
 import NewsCard from "./NewsCardComp";
 import useGetImageHeight from "../../hooks/useGetImageHeight";
 import { sampleData } from "../../common";
+import usePageLoaded from "../../hooks/usePageLoaded";
 
 const initState = {
   systolic: "",
@@ -32,7 +32,6 @@ const sliderSettings = {
 };
 
 export default function Home() {
-  const [setActive, setLoading] = useOutletContext();
   const [bloodPressureInputs, setBloodPressureInputs] = useState(initState);
   const imgRef = useRef();
   const heroHeight = useGetImageHeight(imgRef);
@@ -43,10 +42,7 @@ export default function Home() {
     bloodPressureInputs.date === "" ||
     bloodPressureInputs.time === "";
 
-  useEffect(() => {
-    setActive(0);
-    setLoading(false);
-  }, [setLoading, setActive]);
+  usePageLoaded(0);
 
   const handleChange = (e) => {
     setBloodPressureInputs({

@@ -8,9 +8,9 @@ export default function Layout({ auth }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(loading);
     if (!loading) setLoading(true);
-  }, [navigate, loading]);
+    // eslint-disable-next-line
+  }, [navigate]);
 
   return (
     <div>

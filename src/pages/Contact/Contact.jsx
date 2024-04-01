@@ -1,9 +1,6 @@
-import { useEffect } from "react";
-import { useOutletContext } from "react-router-dom";
+import usePageLoaded from "../../hooks/usePageLoaded";
 
 export default function Contact() {
-  const [setActive] = useOutletContext();
-
-  useEffect(() => setActive(5), [setActive]);
+  usePageLoaded(5);
   return <div>Contact</div>;
 }

@@ -1,9 +1,6 @@
-import { useEffect } from "react";
-import { useOutletContext } from "react-router-dom";
+import usePageLoaded from "../../hooks/usePageLoaded";
 
 export default function AboutUs() {
-  const [setActive] = useOutletContext();
-
-  useEffect(() => setActive(1), [setActive]);
+  usePageLoaded(1);
   return <div>AboutUs</div>;
 }

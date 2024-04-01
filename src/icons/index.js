@@ -17,3 +17,5 @@ export { default as ArrowRight } from "./ArrowRight";
 export { default as ArrowLeft } from "./ArrowLeft";
 export { default as Date } from "./Date";
 export { default as Author } from "./Author";
+export { default as Edit } from "./Add";
+export { default as Bin } from "./Bin";
