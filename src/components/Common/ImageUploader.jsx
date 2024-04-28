@@ -1,4 +1,4 @@
-import { Bin, Edit } from "../icons";
+import { Bin, Edit } from "../Icon";
 
 export default function ImageUploader({
   children,
@@ -18,7 +18,7 @@ export default function ImageUploader({
       {value ? (
         <div className="relative w-full h-full">
           <img
-            src={URL.createObjectURL(value)}
+            src={typeof value === "string" ? value : URL.createObjectURL(value)}
             alt="Uploaded"
             className="absolute top-0 left-0 object-cover w-full h-full"
           />

@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Facebook, Instagram, LinkedIn, Send } from "../icons";
+import { Facebook, Instagram, LinkedIn, Send } from "../Icon";
 import Button from "./Button";
 
 export default function Footer() {

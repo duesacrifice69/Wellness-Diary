@@ -1,4 +1,4 @@
-import { Logo } from "../components";
+import { Logo } from "./";
 
 export default function Banner() {
   return (
