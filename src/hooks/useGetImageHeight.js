@@ -8,7 +8,7 @@ export default function useGetImageHeight(imageRef) {
         setImageHeight(imageRef.current.offsetHeight);
         clearInterval(interval);
       }
-    }, 10);
+    }, 1);
 
     return () => clearInterval(interval);
   }, [imageRef]);
