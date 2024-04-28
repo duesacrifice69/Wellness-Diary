@@ -1,8 +1,8 @@
-export default function Bin() {
+export default function Bin({ width = "800px", height = "800px" }) {
   return (
     <svg
-      width="800px"
-      height="800px"
+      width={width}
+      height={height}
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
