@@ -1,21 +1,20 @@
 import { jwtDecode } from "jwt-decode";
-let decodedData, token;
 
 export const requestHandler = async (api, setLoading, onSuccess, onError) => {
   setLoading && setLoading(true);
   try {
     const response = await api();
-    const { data, statusText } = response;
-    if (statusText === "OK") {
-      onSuccess(data);
+    const { status } = response;
+    if (status === 200) {
+      onSuccess(response);
     }
   } catch (error) {
     console.log(error);
-    if ([401, 403].includes(error?.response.data?.statusCode)) {
+    if ([401, 403].includes(error?.response?.status)) {
       localStorage.clear();
       if (isBrowser) window.location.href = "/Login";
     }
-    onError(error?.response?.data?.message || "Something went wrong");
+    onError(error?.response?.data || "Something went wrong");
   } finally {
     setLoading && setLoading(false);
   }
@@ -54,34 +53,16 @@ export class LocalStorage {
   }
 }
 
-export function getUserDataFromToken() {
-  try {
-    token = localStorage.getItem("token");
-    const isGoogleAuth = token.length > 500; // custom auth or google auth
-    const decodedToken = jwtDecode(token);
-    if (decodedToken.exp > Date.now() / 1000) {
-      decodedData = decodedToken;
-      if (isGoogleAuth) {
-        decodedData.EmailAddress = decodedToken.email;
-        decodedData.UserId = decodedToken.sub;
-        decodedData.Username = decodedToken.name;
-        decodedData.UserRole = "Google User";
-      }
-    } else {
-      LocalStorage.clear();
-      decodedData = null;
-    }
-  } catch {
-    decodedData = null;
+export class JWT {
+  static #data;
+  static decode(_token) {
+    const decodedToken = jwtDecode(_token);
+    const { name, role, userId, exp } = decodedToken;
+    JWT.#data = { name, role, userId, exp };
+    return { name, role, userId, exp };
   }
-  return { ...decodedData };
-}
-
-export function isTokenExpired() {
-  if (decodedData?.exp <= Date.now() / 1000) {
-    return true;
-  } else {
-    return false;
+  static isExpired() {
+    return JWT.#data.exp * 1000 < Date.now();
   }
 }
 
