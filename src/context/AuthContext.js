@@ -1,41 +1,47 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { useNavigate } from "react-router-dom";
-import { loginUser, logoutUser, registerUser } from "../api";
-import { Loader } from "../components";
-import { LocalStorage, getUserDataFromToken, requestHandler } from "../utils";
-import { GoogleOAuthProvider, useGoogleLogin } from "@react-oauth/google";
+import { accessTokenRequest, loginUser, registerUser } from "../api";
+import { JWT, LocalStorage, requestHandler } from "../utils";
+import { useGoogleLogin } from "@react-oauth/google";
+import { adminRoles } from "../constants";
 
-const AuthContext = createContext({
+export const AuthContext = createContext({
   user: null,
-  token: null,
+  isAdmin: false,
   login: async () => {},
   register: async () => {},
   logout: async () => {},
 });
 
-const useAuth = () => useContext(AuthContext);
+export const useAuth = () => useContext(AuthContext);
 
-const AuthProvider = ({ children }) => {
-  const [isLoading, setIsLoading] = useState(false);
+export const AuthProvider = ({ children }) => {
+  const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState(null);
-  const [token, setToken] = useState(null);
   const handleGoogleLogin = useGoogleLogin({
     onSuccess: (codeResponse) => console.log(codeResponse),
   });
 
   const navigate = useNavigate();
 
-  const login = async (data, authType) => {
-    const loginSuccess = (token) => {
+  const loginSuccess = useCallback(
+    (token) => {
       LocalStorage.set("token", token);
-      setUser(getUserDataFromToken(token));
-      setToken(token);
+      setUser(JWT.decode(token));
       navigate("/");
-    };
-
+    },
+    [navigate]
+  );
+  const login = async (data, onError, authType) => {
     switch (authType) {
       case "google":
-        handleGoogleLogin(data);
+        handleGoogleLogin();
         // loginSuccess(data);
         break;
 
@@ -44,24 +50,23 @@ const AuthProvider = ({ children }) => {
           async () => await loginUser(data),
           setIsLoading,
           (res) => {
-            const { data } = res;
-            loginSuccess(data.accessToken);
+            loginSuccess(res.data);
           },
-          alert
+          onError
         );
         break;
     }
   };
 
-  const register = async (data) => {
+  const register = async (data, onSuccess, onError) => {
     await requestHandler(
       async () => await registerUser(data),
       setIsLoading,
       () => {
-        alert("Account created successfully! Go ahead and login.");
+        onSuccess("Account created successfully! Go ahead and login.");
         navigate("/Login");
       },
-      alert
+      onError
     );
   };
 
@@ -70,8 +75,7 @@ const AuthProvider = ({ children }) => {
     //   async () => await logoutUser(),
     //   setIsLoading,
     //   () => {
-    setUser(null);
-    setToken(null);
+    setUser(undefined);
     LocalStorage.clear();
     navigate("/Login");
     //   },
@@ -80,24 +84,39 @@ const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    setIsLoading(true);
-    const _token = LocalStorage.get("token");
-    if (_token) {
-      setUser(getUserDataFromToken(_token));
-      setToken(_token);
-    }
-    setIsLoading(false);
-  }, []);
+    const initUser = async () => {
+      const _token = LocalStorage.get("token");
+      if (_token) {
+        setUser(JWT.decode(_token));
+        if (JWT.isExpired()) {
+          await requestHandler(
+            async () => await accessTokenRequest(),
+            setIsLoading,
+            (res) => {
+              loginSuccess(res.data);
+            },
+            console.log
+          );
+        }
+      } else {
+        setUser(undefined);
+      }
+      setIsLoading(false);
+    };
+    initUser();
+  }, [loginSuccess]);
 
   return (
-    <AuthContext.Provider value={{ user, login, register, logout, token }}>
-      <GoogleOAuthProvider
-        clientId={process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID}
-      >
-        {isLoading ? <Loader /> : children}
-      </GoogleOAuthProvider>
+    <AuthContext.Provider
+      value={{
+        user,
+        isAdmin: adminRoles.includes(user?.role),
+        login,
+        register,
+        logout,
+      }}
+    >
+      {isLoading ? <></> : children}
     </AuthContext.Provider>
   );
 };
-
-export { AuthContext, AuthProvider, useAuth };
