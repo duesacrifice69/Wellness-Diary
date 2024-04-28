@@ -1,7 +1,6 @@
 import { Outlet, useOutletContext } from "react-router-dom";
-import { useEffect } from "react";
 import Slider from "react-slick";
-import { Logo } from "../../components";
+import { Logo } from "../../components/Common";
 
 const sliderSettings = {
   dots: true,
@@ -12,9 +11,7 @@ const sliderSettings = {
 };
 
 export default function AuthLayout() {
-  const [setActive] = useOutletContext();
-
-  useEffect(() => setActive(-1), [setActive]);
+  const { setNotification } = useOutletContext();
 
   return (
     <div className="pt-[160px] bg-[url('../public/authBg.png')] h-[700px] bg-cover bg-no-repeat">
@@ -52,7 +49,7 @@ export default function AuthLayout() {
               </div>
             </Slider>
           </div>
-          <Outlet />
+          <Outlet context={{ setNotification }} />
         </div>
       </div>
     </div>

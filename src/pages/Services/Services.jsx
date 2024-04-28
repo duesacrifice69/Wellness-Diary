@@ -1,15 +1,12 @@
 import { useRef } from "react";
 import useGetImageHeight from "../../hooks/useGetImageHeight";
-import { BottomLine } from "../../components";
-import { servicesSampleData } from "../../common";
-import Service from "./ServiceComp";
-import usePageLoaded from "../../hooks/usePageLoaded";
+import { BottomLine } from "../../components/Common";
+import { servicesSampleData } from "../../constants";
+import Service from "../../components/Services/Service";
 
 export default function Services() {
   const imgRef = useRef();
   const imgH = useGetImageHeight(imgRef);
-
-  usePageLoaded(2);
 
   return (
     <div>

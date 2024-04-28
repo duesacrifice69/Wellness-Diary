@@ -1,29 +1,22 @@
-import { useEffect, useState } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
-import { Banner, Footer, Loader, Navbar } from "../components";
+import { useState } from "react";
+import { Outlet } from "react-router-dom";
+import { Banner, Footer, Navbar, Notification } from "../components/Common";
 
 export default function Layout({ auth }) {
-  const [active, setActive] = useState();
-  const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!loading) setLoading(true);
-    // eslint-disable-next-line
-  }, [navigate]);
+  const [notification, setNotification] = useState();
 
   return (
     <div>
-      <Loader loading={loading} />
       <div className="w-screen fixed top-0 z-[1]">
         <Banner />
-        <Navbar active={active} />
+        <Navbar />
       </div>
+      <Notification {...notification} setNotification={setNotification} />
       {auth ? (
-        <Outlet context={[setActive, setLoading]} />
+        <Outlet context={{ setNotification }} />
       ) : (
         <div className="max-w-screen-lg mx-auto mt-[160px]">
-          <Outlet context={[setActive, setLoading]} />
+          <Outlet context={{ setNotification }} />
         </div>
       )}
       <Footer />

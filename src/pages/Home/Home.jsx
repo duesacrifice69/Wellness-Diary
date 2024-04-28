@@ -7,14 +7,13 @@ import {
   Checkup,
   Dna,
   Team,
-} from "../../icons";
-import { BottomLine, Heading, Input } from "../../components";
+} from "../../components/Icon";
+import { BottomLine, Heading, Input } from "../../components/Common";
 import { chunkArray } from "../../utils";
 import Slider from "react-slick";
-import NewsCard from "./NewsCardComp";
+import NewsCard from "../../components/Home/NewsCard";
 import useGetImageHeight from "../../hooks/useGetImageHeight";
-import { sampleData } from "../../common";
-import usePageLoaded from "../../hooks/usePageLoaded";
+import { useGetArticlesQuery } from "../../api";
 
 const initState = {
   systolic: "",
@@ -32,6 +31,7 @@ const sliderSettings = {
 };
 
 export default function Home() {
+  const { data: news } = useGetArticlesQuery();
   const [bloodPressureInputs, setBloodPressureInputs] = useState(initState);
   const imgRef = useRef();
   const heroHeight = useGetImageHeight(imgRef);
@@ -41,8 +41,6 @@ export default function Home() {
     bloodPressureInputs.diastolic === "" ||
     bloodPressureInputs.date === "" ||
     bloodPressureInputs.time === "";
-
-  usePageLoaded(0);
 
   const handleChange = (e) => {
     setBloodPressureInputs({
@@ -176,6 +174,7 @@ export default function Home() {
             <Input
               label="Date"
               name="date"
+              type="date"
               className="bg-[#E2E6EE]"
               value={bloodPressureInputs.date}
               onChange={handleChange}
@@ -183,6 +182,7 @@ export default function Home() {
             <Input
               label="Time"
               name="time"
+              type="time"
               className="bg-[#E2E6EE]"
               value={bloodPressureInputs.time}
               onChange={handleChange}
@@ -216,11 +216,11 @@ export default function Home() {
         </div>
         <Heading className="text-center">News</Heading>
         <Slider {...sliderSettings}>
-          {chunkArray(sampleData, 4).map((array, index) => (
+          {chunkArray(news ?? [], 4).map((array, index) => (
             <div key={index}>
               <div className="grid grid-cols-2 gap-5 mt-10 p-4">
-                {array.map((news, i) => (
-                  <NewsCard data={news} index={index * 4 + i} key={i} />
+                {array.map((news) => (
+                  <NewsCard data={news} key={news.articleId} />
                 ))}
               </div>
             </div>

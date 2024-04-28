@@ -12,8 +12,13 @@
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 ::-webkit-scrollbar {
     width: 8px;
+    height: 8px;
 }
 
 ::-webkit-scrollbar-track {
@@ -77,4 +82,8 @@
 .slick-dots-large li.slick-active {
     --tw-bg-opacity: 1;
     background-color: rgb(31 43 108 / var(--tw-bg-opacity));
+}
+
+nav>div>.active {
+    @apply text-accent;
 }

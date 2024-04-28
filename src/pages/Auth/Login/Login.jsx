@@ -1,23 +1,25 @@
 import { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Button, Input } from "../../../components";
+import { Link, useOutletContext } from "react-router-dom";
+import { Button, Input } from "../../../components/Common";
 import { useAuth } from "../../../context/AuthContext";
-import { Google } from "../../../icons";
+import { Google } from "../../../components/Icon";
 
 const initState = {
-  userName: "",
+  username: "",
   password: "",
 };
 
 export default function Login() {
   const [loginData, setLoginData] = useState(initState);
+  const { setNotification } = useOutletContext();
   const inputRef = useRef();
   const { login } = useAuth();
-  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await login(loginData);
+    await login(loginData, (err) => {
+      setNotification({ type: "error", message: err, timestamp: new Date() });
+    });
   };
 
   const handleForgotPassword = () => {};
@@ -32,9 +34,9 @@ export default function Login() {
       <div className="text-[25px] font-semibold my-2">Sign to continue</div>
       <form ref={inputRef} onSubmit={handleSubmit} className="my-10">
         <Input
-          value={loginData.userName}
+          value={loginData.username}
           onChange={handleChange}
-          name="userName"
+          name="username"
           label="Username"
           required
         />
@@ -74,12 +76,9 @@ export default function Login() {
 
       <div className="text-center mt-4">
         Don't have an account?{" "}
-        <span
-          className="underline font-bold cursor-pointer"
-          onClick={() => navigate("/Register")}
-        >
+        <Link className="underline font-bold cursor-pointer" to="/Register">
           REGISTER HERE
-        </span>
+        </Link>
       </div>
     </div>
   );
