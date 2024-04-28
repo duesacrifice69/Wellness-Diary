@@ -1,21 +1,22 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
-import { Banner, Footer, Navbar } from "../components";
+import { Banner, Footer, Navbar, Notification } from "../components/Common";
 
 export default function Layout({ auth }) {
-  const [active, setActive] = useState();
+  const [notification, setNotification] = useState();
 
   return (
     <div>
       <div className="w-screen fixed top-0 z-[1]">
         <Banner />
-        <Navbar active={active} />
+        <Navbar />
       </div>
+      <Notification {...notification} setNotification={setNotification} />
       {auth ? (
-        <Outlet context={[setActive]} />
+        <Outlet context={{ setNotification }} />
       ) : (
         <div className="max-w-screen-lg mx-auto mt-[160px]">
-          <Outlet context={[setActive]} />
+          <Outlet context={{ setNotification }} />
         </div>
       )}
       <Footer />

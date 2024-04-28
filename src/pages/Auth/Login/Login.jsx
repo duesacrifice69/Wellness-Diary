@@ -1,24 +1,25 @@
-import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Button, Input } from "../../../components";
+import { useRef, useState } from "react";
+import { Link, useOutletContext } from "react-router-dom";
+import { Button, Input } from "../../../components/Common";
 import { useAuth } from "../../../context/AuthContext";
-import { GoogleLogin } from "@react-oauth/google";
+import { Google } from "../../../components/Icon";
 
 const initState = {
-  userName: "",
+  username: "",
   password: "",
 };
 
 export default function Login() {
   const [loginData, setLoginData] = useState(initState);
+  const { setNotification } = useOutletContext();
   const inputRef = useRef();
-  const [googleLoginWidth, setGoogleLoginWidth] = useState();
   const { login } = useAuth();
-  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await login(loginData);
+    await login(loginData, (err) => {
+      setNotification({ type: "error", message: err, timestamp: new Date() });
+    });
   };
 
   const handleForgotPassword = () => {};
@@ -27,19 +28,15 @@ export default function Login() {
     setLoginData({ ...loginData, [e.target.name]: e.target.value });
   };
 
-  useEffect(() => {
-    setGoogleLoginWidth(inputRef.current?.offsetWidth);
-  }, [setGoogleLoginWidth]);
-
   return (
     <div className="bg-[#FAFAFA] w-[460px] rounded-3xl absolute bottom-0 right-0 rounded-b-none p-10 font-zen text-black">
       <div className="text-[13px] font-meduim">WELCOME BACK</div>
       <div className="text-[25px] font-semibold my-2">Sign to continue</div>
       <form ref={inputRef} onSubmit={handleSubmit} className="my-10">
         <Input
-          value={loginData.userName}
+          value={loginData.username}
           onChange={handleChange}
-          name="userName"
+          name="username"
           label="Username"
           required
         />
@@ -70,36 +67,18 @@ export default function Login() {
           Or
         </div>
       </div>
-      {/* <button
+      <button
         className="w-full flex items-center relative justify-center rounded-lg border-2 border-[#EEE] h-12"
-        onClick={googleLogin}
+        onClick={(e) => login(e, "google")}
       >
         <Google className="absolute left-10" /> Sign in with Google
-      </button> */}
-      <GoogleLogin
-        width={googleLoginWidth}
-        locale="en"
-        onSuccess={(credentialResponse) => {
-          login(credentialResponse.credential, "google");
-        }}
-        onError={(e) => {
-          console.log(e);
-        }}
-        use_fedcm_for_prompt={false}
-        itp_support={false}
-        auto_select={false}
-        useOneTap={false}
-        cancel_on_tap_outside={false}
-      />
+      </button>
 
       <div className="text-center mt-4">
         Don't have an account?{" "}
-        <span
-          className="underline font-bold cursor-pointer"
-          onClick={() => navigate("/Register")}
-        >
+        <Link className="underline font-bold cursor-pointer" to="/Register">
           REGISTER HERE
-        </span>
+        </Link>
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Button, Input } from "../../../components";
+import { Link, useOutletContext } from "react-router-dom";
+import { Button, Input } from "../../../components/Common";
+import { useAuth } from "../../../context/AuthContext";
 
 const initState = {
   username: "",
@@ -11,10 +12,32 @@ const initState = {
 
 export default function Register() {
   const [registerData, setRegisterData] = useState(initState);
-  const navigate = useNavigate();
+  const { setNotification } = useOutletContext();
+  const { register } = useAuth();
+  const passwordRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).{8,}$/;
 
-  const handleSubmit = (e) => {
+  const isPasswordValid = passwordRegex.test(registerData.password);
+  const isPasswordMatches =
+    registerData.confirmPassword.length === 0 ||
+    registerData.password === registerData.confirmPassword;
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    const { username, email, password } = registerData;
+    await register(
+      { username, email, password },
+      (msg) => {
+        setNotification({
+          type: "success",
+          message: msg,
+          timestamp: new Date(),
+        });
+      },
+      (err) => {
+        setNotification({ type: "error", message: err, timestamp: new Date() });
+      }
+    );
   };
 
   const handleChange = (e) => {
@@ -48,6 +71,13 @@ export default function Register() {
           type="password"
           required
         />
+        {!isPasswordValid && (
+          <div className="text-red-600 text-xs -mt-3 mb-4">
+            Password must be at least 8 characters long and contain at least one
+            lowercase letter, one uppercase letter, one number, and one special
+            character.
+          </div>
+        )}
         <Input
           value={registerData.confirmPassword}
           onChange={handleChange}
@@ -56,21 +86,24 @@ export default function Register() {
           type="password"
           required
         />
+        {!isPasswordMatches && (
+          <div className="text-red-600 text-xs -mt-3 mb-4">
+            Password doesn't match
+          </div>
+        )}
         <Button
-          className="rounded-lg w-full text-white font-zen my-8"
+          className="rounded-lg w-full text-white font-zen mb-8"
           style={{ backgroundColor: "#212121" }}
+          disabled={!isPasswordMatches}
         >
           GET STARTED
         </Button>
       </form>
       <div className="text-center">
         Already have an account?{" "}
-        <span
-          className="underline font-bold cursor-pointer"
-          onClick={() => navigate("/Login")}
-        >
+        <Link className="underline font-bold cursor-pointer" to="/Login">
           LOGIN HERE
-        </span>
+        </Link>
       </div>
     </div>
   );
