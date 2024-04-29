@@ -44,7 +44,7 @@ export default function Navbar() {
               ) : (
                 <NavLink
                   to={item.path}
-                  className="flex hover:text-accent cursor-pointer flex-wrap content-center"
+                  className="hover:text-accent cursor-pointer"
                 >
                   {item.name}
                 </NavLink>
