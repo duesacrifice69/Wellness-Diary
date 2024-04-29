@@ -18,7 +18,7 @@ export default function Navbar() {
       <div className="flex content-center max-w-screen-lg h-full mx-auto justify-between font-work text-textPrimary text-lg conte">
         <nav className="flex py-5 gap-[20px]">
           {navigation.map((item, i) => (
-            <div key={i}>
+            <div key={i} className="pt-[6px]">
               {item?.sub ? (
                 <div
                   tabIndex="0"
