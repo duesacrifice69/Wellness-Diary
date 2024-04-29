@@ -75,6 +75,7 @@ export default function Profile() {
       <Heading>My Profile</Heading>
       {userProfileData.email.length > 0 && (
         <Button
+          disabled={isFetching}
           className={
             "ml-auto w-max " + (valuesHaveChanged ? "visible" : "invisible")
           }
