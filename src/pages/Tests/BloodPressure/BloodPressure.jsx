@@ -14,7 +14,7 @@ const initState = {
 };
 
 export default function BloodPressure() {
-  const { setNotification, setTable, isEditing, setIsEditing } =
+  const { setNotification, setTable, isEditing, setIsEditing, onlyHistory } =
     useOutletContext();
   const {
     user: { userId },
@@ -114,39 +114,41 @@ export default function BloodPressure() {
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="my-8">
-        <Input
-          label="Systolic (mm Hg)"
-          name="systolic"
-          type="number"
-          value={bloodPressureInputs.systolic}
-          onChange={handleChange}
-          required
-          small
-        />
-        <Input
-          label="Diastolic (mm Hg)"
-          name="diastolic"
-          type="number"
-          value={bloodPressureInputs.diastolic}
-          onChange={handleChange}
-          required
-          small
-        />
-        <div className="flex gap-5 my-6 items-center">
-          {isEditing && (
-            <span
-              className="underline text-primary cursor-pointer"
-              onClick={handleCancel}
-            >
-              Cancel
-            </span>
-          )}
-          <Button type="submit" disabled={isLoading}>
-            {isEditing ? "Save" : "Insert"}
-          </Button>
-        </div>
-      </form>
+      {!onlyHistory && (
+        <form onSubmit={handleSubmit} className="my-8">
+          <Input
+            label="Systolic (mm Hg)"
+            name="systolic"
+            type="number"
+            value={bloodPressureInputs.systolic}
+            onChange={handleChange}
+            required
+            small
+          />
+          <Input
+            label="Diastolic (mm Hg)"
+            name="diastolic"
+            type="number"
+            value={bloodPressureInputs.diastolic}
+            onChange={handleChange}
+            required
+            small
+          />
+          <div className="flex gap-5 my-6 items-center">
+            {isEditing && (
+              <span
+                className="underline text-primary cursor-pointer"
+                onClick={handleCancel}
+              >
+                Cancel
+              </span>
+            )}
+            <Button type="submit" disabled={isLoading}>
+              {isEditing ? "Save" : "Insert"}
+            </Button>
+          </div>
+        </form>
+      )}
       {!isEditing && <div className="my-8">{data?.description}</div>}
     </>
   );

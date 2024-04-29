@@ -18,6 +18,7 @@ import TestsLayout from "./pages/Tests/Layout.jsx";
 import Cholesterol from "./pages/Tests/Cholesterol/Cholesterol.jsx";
 import AddArticle from "./pages/Articles/Add/AddArticle.jsx";
 import EditArticle from "./pages/Articles/Edit/EditArticle.jsx";
+import Profile from "./pages/Profile/Profile.jsx";
 
 export default function App() {
   const { user, isAdmin } = useAuth();
@@ -37,12 +38,21 @@ export default function App() {
           <Route path="/Articles" element={<Articles />} />
           <Route path="/Articles/:id" element={<Article />} />
         </Route>
+        <Route path="/Profile" element={<Profile />} />
         <Route element={<TestsLayout />}>
           <Route path="/Tests/BloodPressure" element={<BloodPressure />} />
           <Route path="/Tests/BMI" element={<BMI />} />
           <Route path="/Tests/Cholesterol" element={<Cholesterol />} />
           <Route path="/Tests/BloodSugar" element={<BloodSugar />} />
           <Route path="/Tests/FBC" element={<FBC />} />
+          <Route
+            path="/Tests/BloodPressure/History"
+            element={<BloodPressure />}
+          />
+          <Route path="/Tests/BMI/History" element={<BMI />} />
+          <Route path="/Tests/Cholesterol/History" element={<Cholesterol />} />
+          <Route path="/Tests/BloodSugar/History" element={<BloodSugar />} />
+          <Route path="/Tests/FBC/History" element={<FBC />} />
         </Route>
       </Route>
       {/* Admin Pages */}

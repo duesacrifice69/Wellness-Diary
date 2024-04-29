@@ -12,7 +12,14 @@ export const api = createApi({
   }),
 
   reducerPath: "wellnessDiaryApi",
-  tagTypes: ["Articles", "BloodPressure", "BloodSugar", "BMI", "FBC"],
+  tagTypes: [
+    "Articles",
+    "BloodPressure",
+    "BloodSugar",
+    "BMI",
+    "FBC",
+    "UserProfile",
+  ],
   endpoints: (builder) => ({
     getArticles: builder.query({
       query: () => "Articles",
@@ -111,10 +118,24 @@ export const api = createApi({
       }),
       invalidatesTags: ["Cholesterol"],
     }),
+    getUserProfile: builder.query({
+      query: (userId) => `UserProfile/${userId}`,
+      providesTags: ["UserProfile"],
+    }),
+    updateUserProfile: builder.mutation({
+      query: ({ userId, ...body }) => ({
+        url: `UserProfile/${userId}`,
+        method: "PUT",
+        body: { userId, ...body },
+      }),
+      invalidatesTags: ["UserProfile"],
+    }),
   }),
 });
 
 export const {
+  useGetUserProfileQuery,
+  useUpdateUserProfileMutation,
   useGetCholesterolQuery,
   useCheckCholesterolsMutation,
   useGetBloodSugarsQuery,

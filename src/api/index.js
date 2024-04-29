@@ -1,6 +1,8 @@
 export { loginUser, registerUser, accessTokenRequest } from "./axios.js";
 export {
   api,
+  useGetUserProfileQuery,
+  useUpdateUserProfileMutation,
   useGetCholesterolQuery,
   useCheckCholesterolsMutation,
   useGetBloodSugarsQuery,

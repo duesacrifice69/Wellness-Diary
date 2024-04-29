@@ -11,7 +11,7 @@ const initState = {
 };
 
 export default function BMI() {
-  const { setNotification, setTable, isEditing, setIsEditing } =
+  const { setNotification, setTable, isEditing, setIsEditing, onlyHistory } =
     useOutletContext();
   const {
     user: { userId },
@@ -112,39 +112,41 @@ export default function BMI() {
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="my-8">
-        <Input
-          label="Height (cm)"
-          name="height"
-          type="number"
-          value={bmiInputs.height}
-          onChange={handleChange}
-          required
-          small
-        />
-        <Input
-          label="Weight (kg)"
-          name="weight"
-          type="number"
-          value={bmiInputs.weight}
-          onChange={handleChange}
-          required
-          small
-        />
-        <div className="flex gap-5 my-6 items-center">
-          {isEditing && (
-            <span
-              className="underline text-primary cursor-pointer"
-              onClick={handleCancel}
-            >
-              Cancel
-            </span>
-          )}
-          <Button type="submit" disabled={isLoading}>
-            {isEditing ? "Save" : "Insert"}
-          </Button>
-        </div>
-      </form>
+      {!onlyHistory && (
+        <form onSubmit={handleSubmit} className="my-8">
+          <Input
+            label="Height (cm)"
+            name="height"
+            type="number"
+            value={bmiInputs.height}
+            onChange={handleChange}
+            required
+            small
+          />
+          <Input
+            label="Weight (kg)"
+            name="weight"
+            type="number"
+            value={bmiInputs.weight}
+            onChange={handleChange}
+            required
+            small
+          />
+          <div className="flex gap-5 my-6 items-center">
+            {isEditing && (
+              <span
+                className="underline text-primary cursor-pointer"
+                onClick={handleCancel}
+              >
+                Cancel
+              </span>
+            )}
+            <Button type="submit" disabled={isLoading}>
+              {isEditing ? "Save" : "Insert"}
+            </Button>
+          </div>
+        </form>
+      )}
       {!isEditing && <div className="my-8">{data?.message}</div>}
     </>
   );
