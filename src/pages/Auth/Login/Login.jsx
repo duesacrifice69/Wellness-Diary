@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { Link, useOutletContext } from "react-router-dom";
 import { Button, Input } from "../../../components/Common";
 import { useAuth } from "../../../context/AuthContext";
-import { Google } from "../../../components/Icon";
+// import { Google } from "../../../components/Icon";
 
 const initState = {
   username: "",
@@ -61,7 +61,7 @@ export default function Login() {
           LOGIN
         </Button>
       </form>
-      <div className="relative mt-[-20px] mb-5">
+      {/* <div className="relative mt-[-20px] mb-5">
         <hr />
         <div className="absolute top-[-12px] right-0 left-0 max-w-min font-bold bg-[#FAFAFA] px-4 m-auto">
           Or
@@ -72,7 +72,7 @@ export default function Login() {
         onClick={(e) => login(e, "google")}
       >
         <Google className="absolute left-10" /> Sign in with Google
-      </button>
+      </button> */}
 
       <div className="text-center mt-4">
         Don't have an account?{" "}
