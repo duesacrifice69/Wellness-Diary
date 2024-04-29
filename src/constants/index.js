@@ -1,16 +1,17 @@
+export const medicalTests = [
+  { name: "Blood Pressure", path: "/Tests/BloodPressure" },
+  { name: "BMI", path: "/Tests/BMI" },
+  { name: "Cholesterol", path: "/Tests/Cholesterol" },
+  { name: "Blood Sugar", path: "/Tests/BloodSugar" },
+  { name: "FBC", path: "/Tests/FBC" },
+];
 export const navigation = [
   { name: "Home", path: "/" },
   { name: "Articles", path: "/Articles" },
   {
     name: "My Tests",
     path: "/Tests",
-    sub: [
-      { name: "Blood Pressure", path: "/Tests/BloodPressure" },
-      { name: "BMI", path: "/Tests/BMI" },
-      { name: "Cholesterol", path: "/Tests/Cholesterol" },
-      { name: "Blood Sugar", path: "/Tests/BloodSugar" },
-      { name: "FBC", path: "/Tests/FBC" },
-    ],
+    sub: medicalTests,
   },
   { name: "Services", path: "/Services" },
   { name: "About Us", path: "/AboutUs" },

@@ -17,7 +17,7 @@ const initState = {
 };
 
 export default function FBC() {
-  const { setNotification, setTable, isEditing, setIsEditing } =
+  const { setNotification, setTable, isEditing, setIsEditing, onlyHistory } =
     useOutletContext();
   const {
     user: { userId },
@@ -122,84 +122,86 @@ export default function FBC() {
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="my-8">
-        <Input
-          label="Hemoglobin"
-          name="hemoglobin"
-          type="number"
-          value={fbcInputs.hemoglobin}
-          onChange={handleChange}
-          required
-          small
-        />
-        <Input
-          label="White BloodCell Count"
-          name="whiteBloodCellCount"
-          type="number"
-          value={fbcInputs.whiteBloodCellCount}
-          onChange={handleChange}
-          required
-          small
-        />
-        <Input
-          label="Platelet Count"
-          name="plateletCount"
-          type="number"
-          value={fbcInputs.plateletCount}
-          onChange={handleChange}
-          required
-          small
-        />
-        <Input
-          label="Red BloodCell Count"
-          name="rbc"
-          type="number"
-          value={fbcInputs.rbc}
-          onChange={handleChange}
-          required
-          small
-        />
-        <Input
-          label="Neutrophils"
-          name="neutrophils"
-          type="number"
-          value={fbcInputs.neutrophils}
-          onChange={handleChange}
-          required
-          small
-        />
-        <Input
-          label="Eosinophils"
-          name="eosinophils"
-          type="number"
-          value={fbcInputs.eosinophils}
-          onChange={handleChange}
-          required
-          small
-        />
-        <Input
-          label="Lymphocytes"
-          name="lymphocytes"
-          type="number"
-          value={fbcInputs.lymphocytes}
-          onChange={handleChange}
-          required
-          small
-        />
-        <div className="flex gap-5 my-6 items-center">
-          {isEditing && (
-            <span
-              className="underline text-primary cursor-pointer"
-              onClick={handleCancel}
-            >
-              Cancel
-            </span>
-          )}
-          <Button type="submit" disabled={isLoading}>
-            {isEditing ? "Save" : "Insert"}
-          </Button>
-        </div>
-      </form>
+      {!onlyHistory && (
+        <form onSubmit={handleSubmit} className="my-8">
+          <Input
+            label="Hemoglobin"
+            name="hemoglobin"
+            type="number"
+            value={fbcInputs.hemoglobin}
+            onChange={handleChange}
+            required
+            small
+          />
+          <Input
+            label="White BloodCell Count"
+            name="whiteBloodCellCount"
+            type="number"
+            value={fbcInputs.whiteBloodCellCount}
+            onChange={handleChange}
+            required
+            small
+          />
+          <Input
+            label="Platelet Count"
+            name="plateletCount"
+            type="number"
+            value={fbcInputs.plateletCount}
+            onChange={handleChange}
+            required
+            small
+          />
+          <Input
+            label="Red BloodCell Count"
+            name="rbc"
+            type="number"
+            value={fbcInputs.rbc}
+            onChange={handleChange}
+            required
+            small
+          />
+          <Input
+            label="Neutrophils"
+            name="neutrophils"
+            type="number"
+            value={fbcInputs.neutrophils}
+            onChange={handleChange}
+            required
+            small
+          />
+          <Input
+            label="Eosinophils"
+            name="eosinophils"
+            type="number"
+            value={fbcInputs.eosinophils}
+            onChange={handleChange}
+            required
+            small
+          />
+          <Input
+            label="Lymphocytes"
+            name="lymphocytes"
+            type="number"
+            value={fbcInputs.lymphocytes}
+            onChange={handleChange}
+            required
+            small
+          />
+          <div className="flex gap-5 my-6 items-center">
+            {isEditing && (
+              <span
+                className="underline text-primary cursor-pointer"
+                onClick={handleCancel}
+              >
+                Cancel
+              </span>
+            )}
+            <Button type="submit" disabled={isLoading}>
+              {isEditing ? "Save" : "Insert"}
+            </Button>
+          </div>
+        </form>
+      )}
       <div className="my-8">
         {data && !isEditing && (
           <ul className="list-disc">
