@@ -17,7 +17,9 @@ export default function Register() {
   const passwordRegex =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).{8,}$/;
 
-  const isPasswordValid = passwordRegex.test(registerData.password);
+  const isPasswordValid =
+    registerData.password.length === 0 ||
+    passwordRegex.test(registerData.password);
   const isPasswordMatches =
     registerData.confirmPassword.length === 0 ||
     registerData.password === registerData.confirmPassword;

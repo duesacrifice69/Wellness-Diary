@@ -27,7 +27,7 @@ export default function Notification({
       setOpacity((o) => {
         if (o <= 0) {
           clearInterval(popout);
-          return 0;
+          return -0.1;
         }
         return o - 0.1;
       });
@@ -69,7 +69,6 @@ export default function Notification({
         setNotification(null);
       }, 1000);
     }
-
     return () => clearTimeout(cTimeout);
   }, [opacity, setNotification]);
 

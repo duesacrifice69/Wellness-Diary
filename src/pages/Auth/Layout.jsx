@@ -14,7 +14,7 @@ export default function AuthLayout() {
   const { setNotification } = useOutletContext();
 
   return (
-    <div className="pt-[160px] bg-[url('../public/authBg.png')] h-[700px] bg-cover bg-no-repeat">
+    <div className="pt-[160px] bg-[url('../public/auth-bg.png')] h-[700px] bg-cover bg-no-repeat">
       <div className="bg-gradient-to-tr from-[#212121d6] to-[#4242423d] w-full h-full">
         <div className="max-w-screen-lg h-full relative mx-auto">
           <div className="absolute top-20 w-[500px] text-white font-zen leading-7">

@@ -31,13 +31,13 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/AboutUs" element={<AboutUs />} />
         <Route path="/Services" element={<Services />} />
-      </Route>
-      {/* Private Pages */}
-      <Route element={user ? <Layout /> : <Navigate to="/Login" replace />}>
         <Route element={<ArticlesLayout />}>
           <Route path="/Articles" element={<Articles />} />
           <Route path="/Articles/:id" element={<Article />} />
         </Route>
+      </Route>
+      {/* Private Pages */}
+      <Route element={user ? <Layout /> : <Navigate to="/Login" replace />}>
         <Route path="/Profile" element={<Profile />} />
         <Route element={<TestsLayout />}>
           <Route path="/Tests/BloodPressure" element={<BloodPressure />} />

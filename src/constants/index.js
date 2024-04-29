@@ -19,42 +19,46 @@ export const navigation = [
 
 export const adminRoles = ["admin"];
 
-export const servicesSampleData = [
+export const servicesData = [
   {
-    title: "Free Chekup",
+    title: "Manual Health Data Entry",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing Quisque placerat Convallis felis vitae tortor augue. Velit nascetur massa in.",
-    image: "image.png",
+      "Easily track your vital health metrics, such as blood pressure, heart rate, weight, and daily activities.",
+    benefits:
+      "Take control of your health journey by monitoring key indicators and tracking progress over time.",
+    image: "Manual Health Data Entry.jpg",
   },
   {
-    title: "Free Chekup",
+    title: "Real-time Monitoring",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing Quisque placerat Convallis felis vitae tortor augue. Velit nascetur massa in.",
-    image: "image.png",
+      "Receive instant visual feedback on your health metrics, empowering you to stay informed and proactive about your well-being.",
+    benefits:
+      "Stay connected to your health in real-time, enabling timely intervention and improved health outcomes.",
+    image: "Real-time Monitoring.png",
   },
   {
-    title: "Free Chekup",
+    title: "Alert System for Unusual Readings",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing Quisque placerat Convallis felis vitae tortor augue. Velit nascetur massa in.",
-    image: "image.png",
+      "Our notification system alerts you to any abnormal health readings, providing peace of mind and prompt action when needed.",
+    benefits:
+      "Enjoy peace of mind knowing that you'll be notified of any concerning health trends, allowing for timely intervention and support.",
+    image: "Alert System for Unusual Readings.jpg",
   },
   {
-    title: "Free Chekup",
+    title: "Educational Content",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing Quisque placerat Convallis felis vitae tortor augue. Velit nascetur massa in.",
-    image: "image.png",
+      "Access a curated library of articles and resources on various health topics, empowering you with the knowledge to make informed decisions about your health.",
+    benefits:
+      "Expand your understanding of health and wellness topics, enabling you to make proactive choices and adopt healthier habits.",
+    image: "Educational Content.jpg",
   },
   {
-    title: "Free Chekup",
+    title: "Medical Test Details",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing Quisque placerat Convallis felis vitae tortor augue. Velit nascetur massa in.",
-    image: "image.png",
-  },
-  {
-    title: "Free Chekup",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing Quisque placerat Convallis felis vitae tortor augue. Velit nascetur massa in.",
-    image: "image.png",
+      "Gain insights into common medical tests, including their purpose, preparation, and interpretation, helping you better understand your health assessments.",
+    benefits:
+      "Equip yourself with the knowledge to navigate medical tests with confidence, enabling better communication with healthcare providers and informed decision-making.",
+    image: "Medical Test Details.jpg",
   },
 ];
 
