@@ -22,29 +22,20 @@ export default function AuthLayout() {
             <Slider {...sliderSettings}>
               <div>
                 <h1 className="text-4xl font-bold my-8">
-                  Building the Future...
+                  Welcome to WellnessDiary
                 </h1>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </p>
+                <p>Your Comprehensive Health Monitoring Solution</p>
               </div>
               <div>
                 <h1 className="text-4xl font-bold my-8">
-                  Building the Future...
+                  Take Control of Your Health
                 </h1>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </p>
+                <p>Track, Monitor, and Achieve Your Wellness Goals</p>
               </div>
               <div>
-                <h1 className="text-4xl font-bold my-8">
-                  Building the Future...
-                </h1>
+                <h1 className="text-4xl font-bold my-8">Knowledge is Power</h1>
                 <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Learn About Your Health, Make Informed Decisions, Live Better
                 </p>
               </div>
             </Slider>

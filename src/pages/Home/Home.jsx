@@ -1,26 +1,11 @@
-import { useRef, useState } from "react";
-import {
-  Blood,
-  Calendar,
-  Cardiogram,
-  Cash,
-  Checkup,
-  Dna,
-  Team,
-} from "../../components/Icon";
-import { BottomLine, Heading, Input } from "../../components/Common";
+import { useRef } from "react";
+import { Calendar, Cash, Team } from "../../components/Icon";
+import { BottomLine, Heading } from "../../components/Common";
 import { chunkArray } from "../../utils";
 import Slider from "react-slick";
 import NewsCard from "../../components/Home/NewsCard";
 import useGetImageHeight from "../../hooks/useGetImageHeight";
 import { useGetArticlesQuery } from "../../api";
-
-const initState = {
-  systolic: "",
-  diastolic: "",
-  date: "",
-  time: "",
-};
 
 const sliderSettings = {
   dots: true,
@@ -32,25 +17,8 @@ const sliderSettings = {
 
 export default function Home() {
   const { data: news } = useGetArticlesQuery();
-  const [bloodPressureInputs, setBloodPressureInputs] = useState(initState);
   const imgRef = useRef();
   const heroHeight = useGetImageHeight(imgRef);
-
-  const bloodPressureCheckDisabled =
-    bloodPressureInputs.systolic === "" ||
-    bloodPressureInputs.diastolic === "" ||
-    bloodPressureInputs.date === "" ||
-    bloodPressureInputs.time === "";
-
-  const handleChange = (e) => {
-    setBloodPressureInputs({
-      ...bloodPressureInputs,
-      [e.target.name]: e.target.value,
-    });
-  };
-  const handleBloodPresureCheck = (e) => {
-    e.preventDefault();
-  };
 
   return (
     <div>
@@ -106,23 +74,6 @@ export default function Home() {
       <div className="my-16">
         <Heading className="text-center">Check Medical Tests Results</Heading>
         <div className="flex my-12">
-          <div className="w-[380px] flex-wrap border-2 rounded-md">
-            <div className="flex flex-col items-center py-5 gap-2 cursor-pointer hover:bg-accent">
-              <Checkup /> Free Checkup
-            </div>
-            <div className="flex flex-col items-center py-5 gap-2 cursor-pointer hover:bg-accent">
-              <Cardiogram /> Cardiogram
-            </div>
-            <div className="flex flex-col items-center py-5 gap-2 cursor-pointer hover:bg-accent">
-              <Dna /> DNA Testing
-            </div>
-            <div className="flex flex-col items-center py-5 gap-2 cursor-pointer hover:bg-accent">
-              <Blood /> Blood Bank
-            </div>
-            <div className="bg-primary text-accent text-center rounded-b-md py-3 cursor-pointer">
-              View All
-            </div>
-          </div>
           <div className="p-6">
             <div className="text-primary my-4 font-semibold text-2xl">
               A passion for putting patients first.
@@ -148,73 +99,10 @@ export default function Home() {
         </div>
       </div>
       <div className="my-16">
-        <Heading className="text-center">Check Blood Pressure</Heading>
-        <div className="flex justify-between">
-          <div className="text-center font-semibold">
-            <img src="/check-blood-pressure.svg" alt="check-blood-pressure" />
-            Add your first
-            <br />
-            measurement
-          </div>
-          <form className="basis-72">
-            <Input
-              label="Systolic"
-              name="systolic"
-              className="bg-[#E2E6EE]"
-              value={bloodPressureInputs.systolic}
-              onChange={handleChange}
-            />
-            <Input
-              label="Diastolic"
-              name="diastolic"
-              className="bg-[#E2E6EE]"
-              value={bloodPressureInputs.diastolic}
-              onChange={handleChange}
-            />
-            <Input
-              label="Date"
-              name="date"
-              type="date"
-              className="bg-[#E2E6EE]"
-              value={bloodPressureInputs.date}
-              onChange={handleChange}
-            />
-            <Input
-              label="Time"
-              name="time"
-              type="time"
-              className="bg-[#E2E6EE]"
-              value={bloodPressureInputs.time}
-              onChange={handleChange}
-            />
-            <button
-              disabled={bloodPressureCheckDisabled}
-              style={{
-                backgroundColor: bloodPressureCheckDisabled
-                  ? "#EFB4C5"
-                  : "#eb6088",
-              }}
-              onClick={handleBloodPresureCheck}
-              className="w-full font-sans p-2 rounded-xl text-white"
-            >
-              CHECK
-            </button>
-          </form>
-          <div className="basis-96">
-            <h1 className="font-bold">RESULTS</h1>
-            <div>
-              Comment about heart comment about heart comment about heart
-              Comment about heart comment about heart comment about heart
-              Comment about heart comment about heart comment about heart
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="my-16">
         <div className="text-secondary text-center text-lg font-bold font-work tracking-[0.2rem]">
           BETTER INFORMATION, BETTER HEALTH
         </div>
-        <Heading className="text-center">News</Heading>
+        <Heading className="text-center">Artices</Heading>
         <Slider {...sliderSettings}>
           {chunkArray(news ?? [], 4).map((array, index) => (
             <div key={index}>
