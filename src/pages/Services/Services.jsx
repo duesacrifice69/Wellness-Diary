@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import useGetImageHeight from "../../hooks/useGetImageHeight";
-import { BottomLine } from "../../components/Common";
-import { servicesSampleData } from "../../constants";
+import { BottomLine, Heading } from "../../components/Common";
+import { servicesData } from "../../constants";
 import Service from "../../components/Services/Service";
 
 export default function Services() {
@@ -13,8 +13,8 @@ export default function Services() {
       <div className="absolute top-[160px] left-0 z-[-1]">
         <img
           ref={imgRef}
-          src="/news-bg.svg"
-          alt="news background"
+          src="/services-bg.jpg"
+          alt="services background"
           className="w-screen opacity-50"
         />
         <BottomLine />
@@ -23,18 +23,19 @@ export default function Services() {
         style={{
           height: imgH === 0 ? "calc(100vh - 160px)" : imgH,
         }}
-        className="text-primary font-work text-lg flex flex-col justify-center mb-5"
+        className="text-primary font-work text-lg flex flex-col justify-center"
       >
         <div className="">Home / Services</div>
-        <div className="h-7" />
       </div>
-      <div className="flex flex-wrap gap justify-evenly my-20">
-        {servicesSampleData.map(({ title, image, description }, i) => (
+      <Heading className="pt-16 pb-5">Our Services</Heading>
+      <div className="flex flex-wrap justify-evenly mb-20">
+        {servicesData.map(({ title, image, description, benefits }, i) => (
           <Service
             key={i}
             title={title}
             image={image}
             description={description}
+            benefits={benefits}
           />
         ))}
       </div>

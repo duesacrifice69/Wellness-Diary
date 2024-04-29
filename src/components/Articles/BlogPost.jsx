@@ -10,9 +10,8 @@ export default function BlogPost({
   onEdit,
   onDelete,
 }) {
-  const {
-    user: { role },
-  } = useAuth();
+  const { user } = useAuth();
+  const role = user?.role;
 
   return (
     <div className="font-work">

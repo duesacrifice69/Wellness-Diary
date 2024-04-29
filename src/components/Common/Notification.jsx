@@ -69,7 +69,6 @@ export default function Notification({
         setNotification(null);
       }, 1000);
     }
-    console.log(opacity);
     return () => clearTimeout(cTimeout);
   }, [opacity, setNotification]);
 

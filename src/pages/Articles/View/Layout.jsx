@@ -126,8 +126,8 @@ export default function Layout() {
       <div className="absolute top-[160px] left-0 z-[-1]">
         <img
           ref={imgRef}
-          src="/news-bg.svg"
-          alt="news background"
+          src="/services-bg.jpg"
+          alt="articles background"
           className="w-screen opacity-50"
         />
         <BottomLine />
